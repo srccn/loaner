@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <script type="text/javascript">
+            function CalculateMonthlyPay () {
+                var amount = document.MonthlyPayCalculator.LoanAmount.value;
+                var term = document.MonthlyPayCalculator.LoanTerm.value;
+                var rate = document.MonthlyPayCalculator.InterestRate.value;
+                
+                var mr = rate/12000;
+                var nm = term * 12;
+                
+                var pay = amount * mr * ( 1 / (1-Math.pow((1+mr), nm*(-1)) ) );
+                
+                document.getElementById("result").innerHTML = "Monthly Pay is : " + pay.toFixed(2);                               }
+        
+        </script>
+    </head>    
+    <body>
+        <h3>Monthly Priciple and interest calculator</h3>
+        <div>
+            <form name="MonthlyPayCalculator">
+            <label for="LoanAmount">Loan Amount</label> <input name="LoanAmount" value="400000" size="10">
+            <label for="LoanTerm">Loan Term</label> <input name="LoanTerm" value="30" size="6">Year, </input>
+            <label for="InterestRate">Interest Rate</label> <input name="InterestRate" value="3.25" size="6">%, </input>
+            <input type="button" value="Calculate" onclick="Javascript:CalculateMonthlyPay()">
+            <p id="result"></p>
+            </form>
+        </div>
+        <h3>Confirming loan limit lookup</h3>
+        <form name="LoanLimitLookup">
+            <label for="ZipCode">Zip code</label> <input name="ZipCode" value="02110" size="8"></input>
+            <input type="button" value="Look up" onclick="Javascript:LoanLimitLookup()">
+        </form>
+    
+    </body>
+    
+</html>
