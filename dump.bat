@@ -1,0 +1,1 @@
+mysqldump.exe --user=root -proot --host=localhost --protocol=tcp --port=3306 --default-character-set=utf8 --single-transaction=TRUE --routines --skip-triggers "loaner" > dump.sql

@@ -5,7 +5,7 @@
     
         <div style="float: left;">
             loan infomation input
-            <form type="POST" action="calculate.php">
+            <form name="inputForm" type="post" action="calculate.php">
                 <label for="price">Price</label>
                 <input type=text value="300000" id="price" name="price"> <br>
                 <label for="loanAmount">Loan Amount</label>
@@ -19,6 +19,13 @@
                     <option value="three_unit">Three Unit</option>
                     <option value="four_unit">Four Unit</option>
                 </select> <br>
+                <label for="propertyType">Lock Days</label>
+                <select id="lockDays" name="lockDays">
+                    <option value="15">15 Days</option>
+                    <option value="30">30 Days</option>
+                    <option value="45">45 Days</option>
+                    <option value="60">60 Days</option>
+                </select> <br>
                 <input type=checkbox name="fixed30" id="fixed30" value="fixed30">30y Fixed
                 <input type=checkbox name="fixed15" id="fixed15" value="fixed15">15y Fixed
                 <input type=checkbox name="fixed10" id="fixed10" value="Fixed10">10y Fixed <br>
@@ -26,7 +33,7 @@
                 <input type=checkbox name="arm51" id="arm51" value="arm51">5-1 r
                 <input type=checkbox name="arm71" id="arm71" value="arm71">7-1 ARM <br>
                 
-                <input type=submit value="Calculate Result">
+                <input type=submit name="submit" id="submit" value="Calculate Result">
             </form>
         </div>
         <div style="float: right;">
