@@ -1,0 +1,37 @@
+<html>
+    <head>
+    </head>
+    <body>
+    
+        <div style="float: left;">
+            loan infomation input
+            <form type="POST" action="calculate.php">
+                <label for="price">Price</label>
+                <input type=text value="300000" id="price" name="price"> <br>
+                <label for="loanAmount">Loan Amount</label>
+                <input type=text value="240000" id="loanAmount" name="loanAmount"><br>
+                <label for="zipCode">ZipCode</label>
+                <input type=text value="02460" id="zipCode" name="zipCode"><br>
+                <label for="propertyType">Property Type</label>
+                <select id="propertyType" name="properyType">
+                    <option value="one_unit">One Unit</option>
+                    <option value="two_unit">Two Unit</option>
+                    <option value="three_unit">Three Unit</option>
+                    <option value="four_unit">Four Unit</option>
+                </select> <br>
+                <input type=checkbox name="fixed30" id="fixed30" value="fixed30">30y Fixed
+                <input type=checkbox name="fixed15" id="fixed15" value="fixed15">15y Fixed
+                <input type=checkbox name="fixed10" id="fixed10" value="Fixed10">10y Fixed <br>
+                <input type=checkbox name="arm31" id="arm31" value="arm31">3-1 ARM
+                <input type=checkbox name="arm51" id="arm51" value="arm51">5-1 r
+                <input type=checkbox name="arm71" id="arm71" value="arm71">7-1 ARM <br>
+                
+                <input type=submit value="Calculate Result">
+            </form>
+        </div>
+        <div style="float: right;">
+            rate information
+        </div>
+    </body>
+
+</html>
