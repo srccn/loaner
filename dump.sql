@@ -89,8 +89,9 @@ CREATE TABLE `loan_type` (
   `type_name` varchar(45) DEFAULT NULL,
   `type_term` varchar(45) DEFAULT NULL,
   `type_variable_name` varchar(45) DEFAULT NULL,
+  `confirming` int(1) DEFAULT '1',
   PRIMARY KEY (`loan_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,7 +100,7 @@ CREATE TABLE `loan_type` (
 
 LOCK TABLES `loan_type` WRITE;
 /*!40000 ALTER TABLE `loan_type` DISABLE KEYS */;
-INSERT INTO `loan_type` VALUES (1,'30 Years Fixed Confirming','30','fixed30'),(2,'20 Years Fixed Confirming','20','fixed20'),(3,'15 Years Fixed Confirming','15','fixed15'),(4,'10 Years Fixed Confirming','10','fixed10'),(5,'25 Years Fixed Comfirming','25','fixed25'),(6,'1ARM','30','arm1'),(7,'3-1ARM','30','arm31'),(8,'5-1ARM','30','arm51'),(9,'7-1ARM','30','amr71'),(10,'10-1ARM','30','amr101'),(11,'30 Years FHA ','30','fha30'),(12,'30 Years VA','30','va30');
+INSERT INTO `loan_type` VALUES (1,'30 Years Fixed Confirming','30','fixed30',1),(2,'20 Years Fixed Confirming','20','fixed20',1),(3,'15 Years Fixed Confirming','15','fixed15',1),(4,'10 Years Fixed Confirming','10','fixed10',1),(5,'25 Years Fixed Comfirming','25','fixed25',1),(6,'1ARM','30','arm1',1),(7,'3-1ARM','30','arm31',1),(8,'5-1ARM','30','arm51',1),(9,'7-1ARM','30','amr71',1),(10,'10-1ARM','30','amr101',1),(11,'30 Years FHA ','30','fha30',1),(12,'30 Years VA','30','va30',1),(13,'30 Years Fixed non-confirming','30','ncfixed30',0),(14,'20 Years Fixed non-confirming','20','ncfixed20',0),(15,'15 Years Fixed non-confirming','15','ncfixed15',0),(16,'10 Years Fixed non-confirming','10','ncfixed10',0),(17,'25 Years Fixed non-comfirming','25','ncfixed25',0);
 /*!40000 ALTER TABLE `loan_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -179,7 +180,7 @@ CREATE TABLE `purchaser` (
 
 LOCK TABLES `purchaser` WRITE;
 /*!40000 ALTER TABLE `purchaser` DISABLE KEYS */;
-INSERT INTO `purchaser` VALUES (1,'BBT','BBT.php',''),(2,'BOKF','BOKF.php',''),(1001,'bftest','bftest.php','');
+INSERT INTO `purchaser` VALUES (1,'BBT','BBT.php',''),(2,'BOKF','BOKF.php','');
 /*!40000 ALTER TABLE `purchaser` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -243,11 +244,13 @@ DROP TABLE IF EXISTS `stategroupsrp`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `stategroupsrp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `AnountRange_id` int(2) DEFAULT NULL,
   `GroupId` int(2) DEFAULT NULL,
   `srp` decimal(4,3) DEFAULT NULL,
-  `PurchaserId` int(2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `PurchaserId` int(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -256,7 +259,7 @@ CREATE TABLE `stategroupsrp` (
 
 LOCK TABLES `stategroupsrp` WRITE;
 /*!40000 ALTER TABLE `stategroupsrp` DISABLE KEYS */;
-INSERT INTO `stategroupsrp` VALUES (1,1,0.950,1),(2,1,1.500,1),(3,1,1.750,1),(4,1,1.700,1),(5,1,1.650,1),(6,1,1.600,1),(1,2,0.850,1),(2,2,1.400,1),(3,2,1.650,1),(4,2,1.600,1),(5,2,1.550,1),(6,2,1.500,1),(3,3,1.550,1),(2,3,1.300,1),(5,3,1.450,1),(6,3,1.400,1),(1,3,0.750,1),(4,3,1.500,1),(1,4,1.150,1),(2,4,1.700,1),(3,4,1.950,1),(4,4,1.900,1),(5,4,1.850,1),(6,4,1.800,1),(NULL,NULL,NULL,NULL);
+INSERT INTO `stategroupsrp` VALUES (1,1,1,0.950,1),(2,2,1,1.500,1),(3,3,1,1.750,1),(4,4,1,1.700,1),(5,5,1,1.650,1),(6,6,1,1.600,1),(7,1,2,0.850,1),(8,2,2,1.400,1),(9,3,2,1.650,1),(10,4,2,1.600,1),(11,5,2,1.550,1),(12,6,2,1.500,1),(13,3,3,1.550,1),(14,2,3,1.300,1),(15,5,3,1.450,1),(16,6,3,1.400,1),(17,1,3,0.750,1),(18,4,3,1.500,1),(19,1,4,1.150,1),(20,2,4,1.700,1),(21,3,4,1.950,1),(22,4,4,1.900,1),(23,5,4,1.850,1),(24,6,4,1.800,1),(25,1,1,0.910,2),(26,2,1,1.160,2),(27,3,1,1.560,2),(28,4,1,1.610,2),(29,5,1,1.660,2),(30,1,2,0.710,2),(31,2,2,0.960,2),(32,3,2,1.360,2),(33,4,2,1.410,2),(34,5,2,1.460,2),(35,1,3,0.660,2),(36,2,3,0.910,2),(37,3,3,1.310,2),(38,4,3,1.360,2),(39,5,3,1.410,2),(40,1,4,0.610,2),(41,2,4,0.860,2),(42,3,4,1.250,2),(43,4,4,1.310,2),(44,5,4,1.360,2),(45,1,5,0.560,2),(46,2,5,0.810,2),(47,3,5,1.210,2),(48,4,5,1.260,2),(49,5,5,1.310,2);
 /*!40000 ALTER TABLE `stategroupsrp` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -286,6 +289,29 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'loaner'
 --
+/*!50003 DROP FUNCTION IF EXISTS `calculateFees` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `calculateFees`() RETURNS int(11)
+BEGIN
+    DECLARE totalFee DECIMAL;
+    
+    set totalFee = 3000;
+    
+RETURN totalFee;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP FUNCTION IF EXISTS `GetConfirmingLoanUpperLimit` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -420,7 +446,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP FUNCTION IF EXISTS `GetRate` */;
+/*!50003 DROP PROCEDURE IF EXISTS `proc_GetRate` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -430,14 +456,23 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `GetRate`(
-                                       `LockDays`      INT(11),
-                                       `LoanTypeId`    INT(2),
-                                       `LoanAmount`    INT(10), 
-                                       `PurchaserID`   INT(2)) RETURNS decimal(3,2)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_GetRate`(IN purchaserId INT(2), IN loanType INT(2), IN lockDays INT(2), IN zipCode CHAR(5), IN loanAmount INT(10), IN margin DECIMAL )
 BEGIN
 
-RETURN 1;
+    DECLARE srp DECIMAL(4,3);
+    DECLARE fee DECIMAL(4,3);
+    
+    set @srp =  GetGroupedSRPByZip(zipCode,loanType,loanAmount,purchaserId) ;
+    set @fee =  calculateFees();
+
+    SELECT purchaser_id, rate, purchase_price, @srp , round (purchase_price + @srp , 2 ) as SRPprice , round ( (purchase_price + @srp -100 - margin) * loanAmount /100  - @fee ) as credit
+    from purchase t1
+    where t1.loan_type_id = loanType AND
+          t1.lock_days_id = lockDays AND
+          purchaser_id    = purchaserId 
+    having credit > 0
+    order by rate asc
+    limit 5;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -454,4 +489,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-07-28 16:45:31
+-- Dump completed on 2015-07-29 17:54:49
