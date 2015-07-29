@@ -50,6 +50,16 @@ class QueryDB {
     			
     }
     
+    function getGroupedSRPByZip($zipCode, $loanType, $loanAmount, $purchaser){
+        $query = 'select GetGroupedSRPByZip("02460", ' .
+            $loanType . "," .
+            $loanAmount . "," .
+            $purchaser . 
+            ")";
+        $this->runQuery($query);
+    	$row = $this->result->fetch_array(MYSQLI_NUM);
+    	var_dump($row);        
+    }
     
     function _destruct() {
         $this->conn->close();
