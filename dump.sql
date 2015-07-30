@@ -374,25 +374,44 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `GetGroupedSRPByState`(`StateName`     CHAR(2),
                                        `LoanTypeId`    INT(2),
-                                       `LoanAmount`    INT(10), 
+                                       `LoanAmount`    INT(10),
+                                       `upperLimit`    INT(10),
                                        `PurchaserID`   INT(2)) RETURNS decimal(3,2)
 BEGIN
 
  DECLARE srp_group_wk int(2);
  DECLARE srp_amount_range int (2);
  DECLARE srp DECIMAL (3,2);
+ DECLARE max_start_amount_wk INT (10);
+ DECLARE confirming INT(1);
 
    SELECT state_srp_group.srp_group INTO srp_group_wk
    FROM state_srp_group
    WHERE state_srp_group.states LIKE concat ('%', Statename, '%') 
    AND state_srp_group.purchaser_id = PurchaserID;
 
-   select purchaser_srp_loan_amount_range.amount_range_id into srp_amount_range
-   FROM purchaser_srp_loan_amount_range 
-   Where LoanAmount between purchaser_srp_loan_amount_range.start_amount AND  purchaser_srp_loan_amount_range.end_amount  
-	 AND purchaser_srp_loan_amount_range.purchaser_id = PurchaserID 
-	 AND purchaser_srp_loan_amount_range.loan_type_id = LoanTypeId ;
+   select max(purchaser_srp_loan_amount_range.amount_range_id) into srp_amount_range
+   from purchaser_srp_loan_amount_range
+   Where purchaser_srp_loan_amount_range.purchaser_id = PurchaserID
+     AND purchaser_srp_loan_amount_range.loan_type_id = LoanTypeId ;
 
+
+    if  LoanAmount > upperLimit then
+       set confirming = 0;
+       -- srp_amount_group is set up most upper level group
+       
+    else 
+       set confirming = 1;
+       -- figure out group only if loanamount < 417000, if loan amount > 417000, use most upper group level
+       if  LoanAmount < 417000 then 
+           select purchaser_srp_loan_amount_range.amount_range_id into srp_amount_range
+           FROM purchaser_srp_loan_amount_range 
+           Where LoanAmount between purchaser_srp_loan_amount_range.start_amount AND purchaser_srp_loan_amount_range.end_amount   
+	         AND purchaser_srp_loan_amount_range.purchaser_id = PurchaserID 
+	         AND purchaser_srp_loan_amount_range.loan_type_id = LoanTypeId ;
+        end if;
+    end if ;
+  
    select s.srp into srp 
    FROM stategroupsrp s 
    where s.GroupId = srp_group_wk 
@@ -418,7 +437,8 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `GetGroupedSRPByZip`(`ZipCode`     CHAR(5),
                                        `LoanTypeId`    INT(2),
-                                       `LoanAmount`    INT(10), 
+                                       `LoanAmount`    INT(10),
+                                       `upperLimit`    INT(10),
                                        `PurchaserID`   INT(2)
 ) RETURNS decimal(3,2)
 BEGIN
@@ -434,7 +454,7 @@ BEGIN
     return -1;
   end if;  
   
-  select GetGroupedSRPByState(StateName, LoanTypeId, LoanAmount, PurchaserID ) into result;
+  select GetGroupedSRPByState(StateName, LoanTypeId, LoanAmount, upperLimit, PurchaserID ) into result;
   if result is null then
     return -2;
   end if;  
@@ -456,23 +476,25 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_GetRate`(IN purchaserId INT(2), IN loanType INT(2), IN lockDays INT(2), IN zipCode CHAR(5), IN loanAmount INT(10), IN margin DECIMAL )
+CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_GetRate`(IN purchaserId INT(2), IN loanType INT(2), IN lockDays INT(2), IN zipCode CHAR(5), IN loanAmount INT(10), IN propertyType char(20), IN margin DECIMAL )
 BEGIN
 
     DECLARE srp DECIMAL(4,3);
-    DECLARE fee DECIMAL(4,3);
+    DECLARE fee DECIMAL(10,3);
+    DECLARE upperLimit INT(10);
     
-    set @srp =  GetGroupedSRPByZip(zipCode,loanType,loanAmount,purchaserId) ;
-    set @fee =  calculateFees();
+    set upperLimit = GetConfirmingLoanUpperLimit(zipCode,propertyType);
+    set srp =  GetGroupedSRPByZip(zipCode,loanType,loanAmount,propertyType,purchaserId) ;
+    set fee = calculateFees();
 
-    SELECT purchaser_id, rate, purchase_price, @srp , round (purchase_price + @srp , 2 ) as SRPprice , round ( (purchase_price + @srp -100 - margin) * loanAmount /100  - @fee ) as credit
+    SELECT purchaser_id, rate, purchase_price, srp , round (purchase_price + srp , 2 ) as SRPprice , round ( (purchase_price + srp -100 - margin) * loanAmount /100  - fee ) as credit
     from purchase t1
     where t1.loan_type_id = loanType AND
           t1.lock_days_id = lockDays AND
           purchaser_id    = purchaserId 
     having credit > 0
     order by rate asc
-    limit 5;
+    limit 3;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -489,4 +511,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-07-29 17:54:49
+-- Dump completed on 2015-07-30 17:12:46

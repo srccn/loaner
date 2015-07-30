@@ -19,13 +19,14 @@ class QueryDB {
         $this->result = $this->conn->query($q);
     }
     
-    function isConfirming($zip, $propertyType, $loanAmount) {
+    function getConfirming($zip, $propertyType, $loanAmount) {
     	$query= 'select GetConfirmingLoanUpperLimit("' . $zip. '", "' . $propertyType. '")';
     	$this->runQuery($query);
     	$row = $this->result->fetch_array(MYSQLI_NUM);
     	echo "Confirming limit :" . $row[0] . "  ";
     	echo "Loan Amount :" . $loanAmount . " <br> ";
     	echo ($row[0] > $loanAmount ) ? "Yes" :  "No";
+    	return $row[0];
     }
     
     function printResult($q) {
@@ -48,10 +49,11 @@ class QueryDB {
     			
     }
     
-    function getGroupedSRPByZip($zipCode, $loanType, $loanAmount, $purchaser){
+    function getGroupedSRPByZip($zipCode, $loanType, $loanAmount, $upperLimit, $purchaser){
         $query = 'select GetGroupedSRPByZip("02460", ' .
             $loanType . "," .
             $loanAmount . "," .
+            $upperLimit .",".
             $purchaser . 
             ")";
         $this->runQuery($query);
@@ -59,12 +61,13 @@ class QueryDB {
     	var_dump($row);        
     }
     
-    function getRate($purchaserID, $loanType, $lockDays, $zipCode, $loanAmount, $margiin) {
+    function getRate($purchaserID, $loanType, $lockDays, $zipCode, $loanAmount, $propertyType ,$margiin) {
         $query = 'call proc_GetRate(' . $purchaserID . ',' .
             $loanType . ',' .
             $lockDays . ',' .
             '"'.$zipCode.'"'  . ',' .
             $loanAmount . ',' .
+            '"'.$propertyType.'"' . ',' .
             $margiin .
             ")";
         echo $query . "<br>" ;
