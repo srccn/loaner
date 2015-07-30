@@ -37,11 +37,9 @@ class QueryDB {
     	$query = "select * from fees where id=1 ;" ;
     	$this->runQuery($query);
     	$rows =  $this->result->fetch_assoc();
-    	var_dump($rows);
+    	$this->printAssoc($rows);
     	$sum=0;
     	foreach($rows as $x => $x_value) {
-    		//echo "Key=" . $x . ", Value=" . $x_value;
-    		//echo "<br>";
     		if ($x != 'id') {
     			$sum += $x_value;
     		}
@@ -61,8 +59,32 @@ class QueryDB {
     	var_dump($row);        
     }
     
+    function getRate($purchaserID, $loanType, $lockDays, $zipCode, $loanAmount, $margiin) {
+        $query = 'call proc_GetRate(' . $purchaserID . ',' .
+            $loanType . ',' .
+            $lockDays . ',' .
+            '"'.$zipCode.'"'  . ',' .
+            $loanAmount . ',' .
+            $margiin .
+            ")";
+        echo $query . "<br>" ;
+        $this->runQuery($query);
+        while ($row = $this->result->fetch_assoc()) {
+        	$this->printAssoc($row);
+        }
+        mysqli_free_result($this->result);
+    }
+    
     function _destruct() {
         $this->conn->close();
+    }
+    
+    function printAssoc($assocArray){
+    	foreach($assocArray as $x => $x_value) {
+    		//echo "Key=" . $x . ", Value=" . $x_value;
+    		echo $x . "=" . $x_value . ",";
+    	}
+        echo "<br>";
     }
 
 }
