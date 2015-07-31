@@ -67,7 +67,9 @@ class excelLoader {
 	  //populate data into $insert_data arrya
 	  for ($i=0; $i < $products_count; $i++ ){
 	      $loan_type =  $mydatamap[$products[$i]]["loan_type"];
+	      $worksheet = $mydatamap[$products[$i]]['sheetName'];
 	      $range= $mydatamap[$products[$i]]['range'];
+	      $objPHPExcel->setActiveSheetIndexByName($worksheet);
 	      $result = $objPHPExcel->getActiveSheet()->rangeToArray($range,NULL,TRUE,FALSE);
 	      $result_count = count($result);
 	      for ($j=0; $j< $result_count; $j++) { //each rate row
