@@ -8,6 +8,7 @@ class BOKF {
 	
     //30fixed
     private $fixed30 = array (
+    	"sheetName" => "CONF FIXED",
     	"lock_days" => 	[7, 15, 30, 45, 60, 75] , 
     	"loan_type" => 1,	
         "range" => "B27:H39"
@@ -15,14 +16,16 @@ class BOKF {
 
     //25fixed
     private $fixed25 = array (
-    		"lock_days" => 	[7, 15, 30, 45, 60, 75] ,
-    		"loan_type" => 5,
-    		"range" => "B27:H39"
+    	"sheetName" => "CONF FIXED",
+    	"lock_days" => 	[7, 15, 30, 45, 60, 75] ,
+    	"loan_type" => 5,
+    	"range" => "B27:H39"
     );
     
     
     //20fixed
     private $fixed20 = array (
+    	"sheetName" => "CONF FIXED",
     	"lock_days" => 	[7, 15, 30, 45, 60, 75], 
     	"loan_type" => 2,
         "range" => "J27:P39"
@@ -30,6 +33,7 @@ class BOKF {
 
     //15fixed
     private $fixed15 = array (
+    	"sheetName" => "CONF FIXED",
     	"lock_days" => 	[7, 15, 30, 45, 60, 75], 
     	"loan_type" => 3,
     	"range" => "R27:X39"
@@ -37,9 +41,10 @@ class BOKF {
     
     //10fixed
     private $fixed10 = array (
-    		"lock_days" => 	[7, 15, 30, 45, 60, 75],
-    		"loan_type" => 4,
-    		"range" => "B75:H87"
+    	"sheetName" => "CONF FIXED",
+    	"lock_days" => 	[7, 15, 30, 45, 60, 75],
+    	"loan_type" => 4,
+    	"range" => "B75:H87"
     );
     
     
