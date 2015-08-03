@@ -4,6 +4,7 @@ class QueryDB {
 
     private $conn;
     private $result;
+    private $margin=1.00;
     
     function QueryDB() {
         require 'data/db.php';
@@ -61,14 +62,14 @@ class QueryDB {
     	var_dump($row);        
     }
     
-    function getRate($purchaserID, $loanType, $lockDays, $zipCode, $loanAmount, $propertyType ,$margiin) {
+    function getRate($purchaserID, $loanType, $lockDays, $zipCode, $loanAmount, $propertyType ,$margin) {
         $query = 'call proc_GetRate(' . $purchaserID . ',' .
             $loanType . ',' .
             $lockDays . ',' .
             '"'.$zipCode.'"'  . ',' .
             $loanAmount . ',' .
             '"'.$propertyType.'"' . ',' .
-            $margiin .
+            $margin .
             ")";
         echo $query . "<br>" ;
         $this->runQuery($query);
