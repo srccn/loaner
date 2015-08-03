@@ -3,6 +3,9 @@
     echo "Loan Amount   : " . $_REQUEST['loanAmount'] . "<br>";
     echo "Property type : " . $_REQUEST['properyType'] . "<br>" ;
     echo "Lock Days     : " . $_REQUEST['lockDays'] . "<br>" ;
+    echo "Rate Margin   : " . $_REQUEST['margin'] . "<br>" ;
+    
+    $margin = $_REQUEST['margin'];
     
     echo "<h3>Is confirming loan or not</h3>";
     require 'testQuery.php';
@@ -14,29 +17,32 @@
     if (isset($_REQUEST['fixed30'])) {
         echo "30 years Fixed " ;
         echo "<br> - BBT <br>";
+        $loanType = ($_REQUEST['loanAmount'] > $upperLimit) ? 13:1 ;
         $myQuery = new QueryDB();
-        $myQuery->getGroupedSRPByZip($_REQUEST['zipCode'],1,$_REQUEST['loanAmount'], $upperLimit,1);
+        $myQuery->getGroupedSRPByZip($_REQUEST['zipCode'],$loanType,$_REQUEST['loanAmount'], $upperLimit,1);
         echo "<br> - BOKF <br>";
         $myQuery = new QueryDB();
-        $myQuery->getGroupedSRPByZip($_REQUEST['zipCode'],1,$_REQUEST['loanAmount'],$upperLimit,2);
+        $myQuery->getGroupedSRPByZip($_REQUEST['zipCode'],$loanType,$_REQUEST['loanAmount'],$upperLimit,2);
     };
     if (isset($_REQUEST['fixed15'])) {
     	echo "15 years Fixed <br>" ; 
         echo "<br> - BBT <br>";
+        $loanType = ($_REQUEST['loanAmount'] > $upperLimit) ? 15:3 ;
         $myQuery = new QueryDB();
-        $myQuery->getGroupedSRPByZip($_REQUEST['zipCode'],3,$_REQUEST['loanAmount'], $upperLimit,1);
+        $myQuery->getGroupedSRPByZip($_REQUEST['zipCode'],$loanType,$_REQUEST['loanAmount'], $upperLimit,1);
         echo "<br> - BOKF <br>";
         $myQuery = new QueryDB();
-        $myQuery->getGroupedSRPByZip($_REQUEST['zipCode'],3,$_REQUEST['loanAmount'],$upperLimit,2);
+        $myQuery->getGroupedSRPByZip($_REQUEST['zipCode'],$loanType,$_REQUEST['loanAmount'],$upperLimit,2);
     };
     if (isset($_REQUEST['fixed10'])) {
     	echo "10 years Fixed <br>" ; 
         echo "<br> - BBT <br>";
+        $loanType = ($_REQUEST['loanAmount'] > $upperLimit) ? 16:4 ;
         $myQuery = new QueryDB();
-        $myQuery->getGroupedSRPByZip($_REQUEST['zipCode'],4,$_REQUEST['loanAmount'], $upperLimit,1);
+        $myQuery->getGroupedSRPByZip($_REQUEST['zipCode'],$loanType,$_REQUEST['loanAmount'], $upperLimit,1);
         echo "<br> - BOKF <br>";
         $myQuery = new QueryDB();
-        $myQuery->getGroupedSRPByZip($_REQUEST['zipCode'],4,$_REQUEST['loanAmount'],$upperLimit,2);
+        $myQuery->getGroupedSRPByZip($_REQUEST['zipCode'],$loanType,$_REQUEST['loanAmount'],$upperLimit,2);
     };
     
     if (isset($_REQUEST['arm31'])) {echo "3-1 ARM <br>" ; };
@@ -47,29 +53,32 @@
     if (isset($_REQUEST['fixed30'])) {
         echo "30 years Fixed <br>" ; 
         echo "<br> - BBT <br>";
+        $loanType = ($_REQUEST['loanAmount'] > $upperLimit) ? 13:1 ;
         $myQuery = new QueryDB();
-        $myQuery->getRate(1,1,$_REQUEST['lockDays'],$_REQUEST['zipCode'], $_REQUEST['loanAmount'],$_REQUEST['properyType'],1.00);
+        $myQuery->getRate(1, $loanType, $_REQUEST['lockDays'],$_REQUEST['zipCode'], $_REQUEST['loanAmount'],$_REQUEST['properyType'],$margin);
        echo "<br> - BOKF <br>";
         $myQuery = new QueryDB();
-        $myQuery->getRate(2,1,$_REQUEST['lockDays'],$_REQUEST['zipCode'], $_REQUEST['loanAmount'],$_REQUEST['properyType'],1.00);
+        $myQuery->getRate(2, $loanType ,$_REQUEST['lockDays'],$_REQUEST['zipCode'], $_REQUEST['loanAmount'],$_REQUEST['properyType'],$margin);
     }; 
     if (isset($_REQUEST['fixed15'])) {
     	echo "15 years Fixed <br>" ; 
         echo "<br> - BBT <br>";
+        $loanType = ($_REQUEST['loanAmount'] > $upperLimit) ? 15:3 ;
         $myQuery = new QueryDB();
-        $myQuery->getRate(1,3,$_REQUEST['lockDays'],$_REQUEST['zipCode'], $_REQUEST['loanAmount'],$_REQUEST['properyType'],1.00);
+        $myQuery->getRate(1,$loanType,$_REQUEST['lockDays'],$_REQUEST['zipCode'], $_REQUEST['loanAmount'],$_REQUEST['properyType'],$margin);
         echo "<br> - BOKF <br>";
         $myQuery = new QueryDB();
-        $myQuery->getRate(2,3,$_REQUEST['lockDays'],$_REQUEST['zipCode'], $_REQUEST['loanAmount'],$_REQUEST['properyType'],1.00);
+        $myQuery->getRate(2,$loanType,$_REQUEST['lockDays'],$_REQUEST['zipCode'], $_REQUEST['loanAmount'],$_REQUEST['properyType'],$margin);
     }; 
     if (isset($_REQUEST['fixed10'])) {
     	echo "10 years Fixed <br>" ; 
         echo "<br> - BBT <br>";
+        $loanType = ($_REQUEST['loanAmount'] > $upperLimit) ? 16:4 ;
         $myQuery = new QueryDB();
-        $myQuery->getRate(1,4,$_REQUEST['lockDays'],$_REQUEST['zipCode'], $_REQUEST['loanAmount'],$_REQUEST['properyType'],1.00);
+        $myQuery->getRate(1,$loanType,$_REQUEST['lockDays'],$_REQUEST['zipCode'], $_REQUEST['loanAmount'],$_REQUEST['properyType'],$margin);
         echo "<br> - BOKF <br>";
         $myQuery = new QueryDB();
-        $myQuery->getRate(2,4,$_REQUEST['lockDays'],$_REQUEST['zipCode'], $_REQUEST['loanAmount'],$_REQUEST['properyType'],1.00);
+        $myQuery->getRate(2,$loanType,$_REQUEST['lockDays'],$_REQUEST['zipCode'], $_REQUEST['loanAmount'],$_REQUEST['properyType'],$margin);
     }; 
 
     if (isset($_REQUEST['arm31'])) {echo "3-1 ARM <br>" ; };
