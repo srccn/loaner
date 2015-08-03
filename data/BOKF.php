@@ -47,6 +47,21 @@ class BOKF {
     	"range" => "B75:H87"
     );
     
+    //ncfixed30
+    private $ncfixed30 = array (
+    		"sheetName" => "SUPERCONF",
+    		"lock_days" => 	[30, 45, 60],
+    		"loan_type" => 13,
+    		"range" => "B20:E32"
+    );
+    
+    //ncfixed15
+    private $ncfixed15 = array (
+    		"sheetName" => "SUPERCONF",
+    		"lock_days" => 	[30, 45, 60],
+    		"loan_type" => 15,
+    		"range" => "G20:J32"
+    );
     
     public function getMap() {
 	    return array(
@@ -55,6 +70,8 @@ class BOKF {
 	    	"fixed20" => $this->fixed20,			
 	        "fixed15" => $this->fixed15,			
 	        "fixed10" => $this->fixed10,			
+	        "ncfixed30" => $this->ncfixed30,			
+  	        "ncfixed15" => $this->ncfixed15,			
 	    );
     }
     
