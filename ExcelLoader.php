@@ -1,6 +1,6 @@
 <?php
 define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
-class excelLoader {
+class ExcelLoader {
 
 	private $excel_file;
 	private $excel_map_file;

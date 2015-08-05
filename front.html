@@ -6,34 +6,47 @@
         <div style="float: left;">
             loan infomation input
             <form name="inputForm" type="post" action="calculate.php">
-                <label for="price">Price</label>
-                <input type=text value="300000" id="price" name="price"> <br>
+                <label for="price">Transaction Type</label>
+                <input type="radio" name="transactionType" value="Purchase" checked>Purchase
+                <input type="radio" name="transactionType" value="Refinance">Refinance
+                <input type="radio" name="transactionType" value="coRefinance">Cash Out Refinance
+                <br>
+                <label for="price">Property Purchase Price</label>
+                <input type=text value="400000" id="price" name="price"> <br>
                 <label for="loanAmount">Loan Amount</label>
-                <input type=text value="240000" id="loanAmount" name="loanAmount"><br>
+                <input type=text value="320000" id="loanAmount" name="loanAmount"><br>
                 <label for="zipCode">ZipCode</label>
                 <input type=text value="02460" id="zipCode" name="zipCode"><br>
                 <label for="propertyType">Property Type</label>
                 <select id="propertyType" name="properyType">
-                    <option value="one_unit">One Unit</option>
-                    <option value="two_unit">Two Unit</option>
-                    <option value="three_unit">Three Unit</option>
-                    <option value="four_unit">Four Unit</option>
+                    <option value="Condo">Condo</option>
+                    <option value="one_unit" selected>Single Family</option>
+                    <option value="two_unit">Two Family</option>
+                    <option value="three_unit">Three Family</option>
+                    <option value="four_unit">Four Family</option>
                 </select> <br>
+                <label for="occupancy">Occupancy</label>
+                <select id="occupancy" name="occupancy">
+                    <option value="primaryHome" selected>Primay Home</option>
+                    <option value="secondHome">Second Home</option>
+                    <option value="investmentHome">Investment</option>
+                </select> <br>
+                
                 <label for="propertyType">Lock Days</label>
                 <select id="lockDays" name="lockDays">
                     <option value="15">15 Days</option>
                     <option value="30">30 Days</option>
-                    <option value="45">45 Days</option>
+                    <option value="45" selected >45 Days</option>
                     <option value="60">60 Days</option>
                 </select> <br>
-                <input type=checkbox name="fixed30" id="fixed30" value="fixed30">30y Fixed
+                <input type=checkbox name="fixed30" id="fixed30" value="fixed30" checked>30y Fixed
                 <input type=checkbox name="fixed15" id="fixed15" value="fixed15">15y Fixed
                 <input type=checkbox name="fixed10" id="fixed10" value="Fixed10">10y Fixed <br>
                 <input type=checkbox name="arm31" id="arm31" value="arm31">3-1 ARM
-                <input type=checkbox name="arm51" id="arm51" value="arm51">5-1 r
+                <input type=checkbox name="arm51" id="arm51" value="arm51">5-1 ARM
                 <input type=checkbox name="arm71" id="arm71" value="arm71">7-1 ARM <br>
-                <label for="rateMargine">Rate Margin</label>
-                <input type=text value="1.00" id="margin" name="margin"><br>
+                <label for="rateMargine" hidden >Rate Margin</label>
+                <input type=text value="1.50" id="margin" name="margin" hidden ><br>
                 <input type=submit name="submit" id="submit" value="Calculate Result">
             </form>
         </div>

@@ -327,14 +327,14 @@ UNLOCK TABLES;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `calculateFees`() RETURNS int(11)
 BEGIN
     DECLARE totalFee DECIMAL;
-    
-    set totalFee = 3000;
-    
+
+    SET totalFee = 3000;
+
 RETURN totalFee;
 END ;;
 DELIMITER ;
@@ -554,4 +554,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-03 17:02:01
+-- Dump completed on 2015-08-05 17:17:27
