@@ -106,7 +106,7 @@ class ExcelLoader {
 }
 
 //BBT
-$myLoader = new excelLoader;
+$myLoader = new ExcelLoader;
 $myLoader->setExcelFile("data/BBT.xls");
 $myLoader->setExcelMapFile("data/BBT.php");
 $myLoader->setBankSymbol("BBT");
@@ -117,7 +117,7 @@ unset($myLoader);
 unset($DataMap);
 
 //BOKF
-$bokfLoader = new excelLoader;
+$bokfLoader = new ExcelLoader;
 $bokfLoader->setExcelFile("data/BOKF CMS Rate Sheet.xlsx");
 $bokfLoader->setExcelMapFile("data/BOKF.php");
 $bokfLoader->setBankSymbol("BOKF");
